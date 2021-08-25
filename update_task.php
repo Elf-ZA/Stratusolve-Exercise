@@ -4,4 +4,16 @@
  */
 require('Task.class.php');
 // Assignment: Implement this script
+    $receivedFunct = $_POST['task'];
+    $recivedID = $_POST['ID'];
+
+    if ($receivedFunct == 'save') {
+        Save();
+    }
+    if ($receivedFunct == 'delete') {
+        Delete();
+    }
+    if ($receivedFunct == 'show') {
+        __construct();
+    }
 ?>

@@ -28,7 +28,7 @@ class Task {
     }
     protected function getUniqueId() {
         // Assignment: Code to get new unique ID
-        return -1; // Placeholder return for now
+        return -2; // Placeholder return for now
     }
     protected function LoadFromId($Id = null) {
         if ($Id) {
@@ -39,9 +39,11 @@ class Task {
 
     public function Save() {
         //Assignment: Code to save task here
+        echo 'I have recieved a save command';
     }
     public function Delete() {
         //Assignment: Code to delete task here
+        echo 'I have recieved a delete command';
     }
 }
 ?>

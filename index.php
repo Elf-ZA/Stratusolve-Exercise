@@ -59,7 +59,7 @@
                 Add Task
             </button>
             <div id="TaskList" class="list-group">
-                <!-- Assignment: These are simply dummy tasks to show how it should look and work. You need to dynamically update this list with actual tasks -->
+                 <!-- Assignment: These are simply dummy tasks to show how it should look and work. You need to dynamically update this list with actual tasks --> 
             </div>
         </div>
         <div class="col-md-3">
@@ -72,6 +72,7 @@
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var currentTaskId = -1;
+    var doStuff = {task:'show',id:null};
     $('#myModal').on('show.bs.modal', function (event) {
         var triggerElement = $(event.relatedTarget); // Element that triggered the modal
         var modal = $(this);
@@ -90,19 +91,22 @@
         //Assignment: Implement this functionality
         alert('Save... Id:'+currentTaskId);
         $('#myModal').modal('hide');
-        updateTaskList();
+        doStuff = {task:'save',id: currentTaskId}
+        updateTaskList(doStuff);
     });
     $('#deleteTask').click(function() {
         //Assignment: Implement this functionality
         alert('Delete... Id:'+currentTaskId);
         $('#myModal').modal('hide');
-        updateTaskList();
+        doStuff = {task:'delete',id: currentTaskId}
+        updateTaskList(doStuff);
     });
-    function updateTaskList() {
-        $.post("list_tasks.php", function( data ) {
+    function updateTaskList(gotStuff) {
+                //post.("update_task.php) list_tasks.php
+        $.post("update_task.php", gotStuff,function( data ) {
             $( "#TaskList" ).html( data );
         });
     }
-    updateTaskList();
+    updateTaskList(doStuff);
 </script>
 </html>
