@@ -72,7 +72,7 @@
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var currentTaskId = -1;
-    var doStuff = {task:'show',id:null};
+    var doStuff = {task:'show',id:currentTaskId};
     $('#myModal').on('show.bs.modal', function (event) {
         var triggerElement = $(event.relatedTarget); // Element that triggered the modal
         var modal = $(this);
@@ -104,6 +104,7 @@
     function updateTaskList(gotStuff) {
                 //post.("update_task.php) list_tasks.php
         $.post("update_task.php", gotStuff,function( data ) {
+            console.log(data);
             $( "#TaskList" ).html( data );
         });
     }
