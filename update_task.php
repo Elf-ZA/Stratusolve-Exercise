@@ -4,30 +4,27 @@
  */
 require('task.class.php');
 // Assignment: Implement this script
-/*     $receivedFunct = $_POST['task'];
-    $recivedID = $_POST['ID']; */
-$task = $_POST['task'];
 
-if (isset($task)) {
-   // var_dump($task);
-    if ($task == "show") {
-        echo(' if-hello');
-    } elseif ($task == "save") {
-        $sav = new Task();
-        $return = $sav->Save();
-        var_dump($return);
-        echo ($return);
-    } elseif ($task == "delete") {
-        echo (' if-delete');
+
+$do = $_POST['task'];
+$curID = $_POST['id'];
+$description = $_POST['desc'];
+$name = $_POST['name'];
+
+$Task = new Task();
+
+if (isset($do)) {
+    if ($do == "show") { 
+        include('list_tasks.php');       
+        die($html);
+    } elseif ($do == "save") {
+        $save = $Task->Save($curID, $name, $description);
+        var_dump($save);
+        echo ($save);
+    } elseif ($do == "delete") {
+        $delete = $Task->Delete($curID);
+        echo ($delete);
     } 
 }
-echo($task);
-/* chooseTask($task);
-
-function chooseTask($giveTask) {
-
-}
- */
-
 
 ?>

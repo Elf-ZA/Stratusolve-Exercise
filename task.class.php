@@ -37,13 +37,15 @@ class Task {
             return null;
     }
 
-    public function Save() {
+    public function Save($recievedID, $recievedName, $recievedDesc) {
         //Assignment: Code to save task here
-       return 'this is from Save()';
+        if ($recievedID == -1) return 'Looks like a new one eh';
+            // $recievedName;
+        return $this->$TaskDataSource;
     }
-    public function Delete() {
+    public function Delete($recievedID) {
         //Assignment: Code to delete task here
-        echo 'I have recieved a delete command';
+        return 'I need to delete item ID '.$recievedID;
     }
 }
 ?>

@@ -72,7 +72,7 @@
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var currentTaskId = -1;
-    var doStuff = {task:'show',id:currentTaskId};
+    var doStuff = {task:'show',id:currentTaskId, name: null, desc: null};
     $('#myModal').on('show.bs.modal', function (event) {
         var triggerElement = $(event.relatedTarget); // Element that triggered the modal
         var modal = $(this);
@@ -90,15 +90,17 @@
     $('#saveTask').click(function() {
         //Assignment: Implement this functionality
         alert('Save... Id:'+currentTaskId);
+        var Tname = $('#InputTaskName').val(); 
+        var Tdesc = $('#InputTaskDescription').val();
         $('#myModal').modal('hide');
-        doStuff = {task:'save',id: currentTaskId}
+        doStuff = {task:'save',id: currentTaskId, name: Tname, desc: Tdesc}
         updateTaskList(doStuff);
     });
     $('#deleteTask').click(function() {
         //Assignment: Implement this functionality
         alert('Delete... Id:'+currentTaskId);
         $('#myModal').modal('hide');
-        doStuff = {task:'delete',id: currentTaskId}
+        doStuff = {task:'delete',id: currentTaskId, name: null, desc: null}
         updateTaskList(doStuff);
     });
     function updateTaskList(gotStuff) {
