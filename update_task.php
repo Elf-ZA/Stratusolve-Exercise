@@ -18,8 +18,8 @@ if (isset($do)) {
         include('list_tasks.php');       
         die($html);
     } elseif ($do == "save") {
-        $save = $Task->Save($curID, $name, $description);
-        var_dump($save);
+        $save = $Task->Save($curID, $name, $description);     
+        var_dump($save);  
         echo ($save);
     } elseif ($do == "delete") {
         $delete = $Task->Delete($curID);
