@@ -13,17 +13,15 @@ $name = $_POST['name'];
 
 $Task = new Task();
 
-if (isset($do)) {
-    if ($do == "show") { 
-        include('list_tasks.php');       
-        die($html);
-    } elseif ($do == "save") {
-        $save = $Task->Save($curID, $name, $description);     
-        var_dump($save);  
-        echo ($save);
+
+if (isset($do) && isset($curID) || isset($description) || isset($name)) {
+    if ($do == "save") {         
+        $Task->Save($name, $description); 
+    } elseif ($do == "update") {
+        $update = $Task->Update($curID, $name, $description);
+        echo($update);
     } elseif ($do == "delete") {
-        $delete = $Task->Delete($curID);
-        echo ($delete);
+       $Task->Delete($curID);
     } 
 }
 

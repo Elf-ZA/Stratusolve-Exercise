@@ -26,7 +26,7 @@
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
-                <form action="update_task.php" method="post">
+                <form id="form" action="update_task.php" method="post">
                     <div class="row">
                         <div class="col-md-12" style="margin-bottom: 5px;;">
                             <input id="InputTaskName" type="text" placeholder="Task Name" class="form-control">
@@ -41,6 +41,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button id="deleteTask" type="button" class="btn btn-danger">Delete Task</button>
                 <button id="saveTask" type="button" class="btn btn-primary">Save changes</button>
+                <button id="updateTask" type= "button" class= "btn btn-primary">Update changes</button>
             </div>
         </div>
     </div>
@@ -54,6 +55,9 @@
         </div>
         <div class="col-md-6">
             <h2 class="page-header">Task List</h2>
+        <div id="debug">
+               
+        </div>
             <!-- Button trigger modal -->
             <button id="newTask" type="button" class="btn btn-primary btn-lg" style="width:100%;margin-bottom: 5px;" data-toggle="modal" data-target="#myModal">
                 Add Task
@@ -72,44 +76,77 @@
 <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var currentTaskId = -1;
-    var doStuff = {task:'show',id:currentTaskId, name: null, desc: null};
+    var doStuff = {task:null,id:currentTaskId, name: null, desc: null};
+
     $('#myModal').on('show.bs.modal', function (event) {
         var triggerElement = $(event.relatedTarget); // Element that triggered the modal
         var modal = $(this);
         if (triggerElement.attr("id") == 'newTask') {
             modal.find('.modal-title').text('New Task');
             $('#deleteTask').hide();
+            $('#updateTask').hide();
+            $('#saveTask').show();
             currentTaskId = -1;
         } else {
             modal.find('.modal-title').text('Task details');
             $('#deleteTask').show();
+            $('#updateTask').show();
+            $('#saveTask').hide();
             currentTaskId = triggerElement.attr("id");
-            console.log('Task ID: '+triggerElement.attr("id"));
+            //See if I can't pull name and desc from html via jquery. Instead of txt.
         }
     });
+
     $('#saveTask').click(function() {
         //Assignment: Implement this functionality
-        alert('Save... Id:'+currentTaskId);
+       // alert('Save... Id:'+currentTaskId);
         var Tname = $('#InputTaskName').val(); 
         var Tdesc = $('#InputTaskDescription').val();
-        $('#myModal').modal('hide');
-        doStuff = {task:'save',id: currentTaskId, name: Tname, desc: Tdesc}
-        updateTaskList(doStuff);
+
+            if (!Tname || !Tdesc) {
+                alert('Name or Description empty');
+            } else {
+                 $('#myModal').modal('hide');
+                 doStuff = {task:'save',id: currentTaskId, name: Tname, desc: Tdesc};
+                 updateTaskList(doStuff); 
+                 $('#form')[0].reset();
+            }           
     });
+
     $('#deleteTask').click(function() {
         //Assignment: Implement this functionality
-        alert('Delete... Id:'+currentTaskId);
+       // alert('Delete... Id:'+currentTaskId);
         $('#myModal').modal('hide');
         doStuff = {task:'delete',id: currentTaskId, name: null, desc: null}
         updateTaskList(doStuff);
     });
-    function updateTaskList(gotStuff) {
-                //post.("update_task.php) list_tasks.php
-        $.post("update_task.php", gotStuff,function( data ) {
-            console.log(data);
+    $('#updateTask').click( () => {
+                
+        var Tname = $('#InputTaskName').val(); 
+        var Tdesc = $('#InputTaskDescription').val();
+
+            if (!Tname || !Tdesc) {
+                alert('Name or Description empty');
+            } else {
+                $('#myModal').modal('hide');
+                doStuff = {task:'update',id: currentTaskId, name: Tname, desc: Tdesc};
+                updateTaskList(doStuff);
+            }
+
+    })
+    
+    function showTaskList() {
+        $.post("list_tasks.php",(data) => {
             $( "#TaskList" ).html( data );
         });
     }
-    updateTaskList(doStuff);
+
+    function updateTaskList(gotStuff) {
+        $.post("update_task.php", gotStuff,function( data ) {
+            $( "#debug" ).html( data );            
+            showTaskList();           
+        });
+    }
+    showTaskList();
 </script>
 </html>
