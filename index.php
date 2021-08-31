@@ -87,12 +87,18 @@
             $('#updateTask').hide();
             $('#saveTask').show();
             currentTaskId = -1;
+            $('#form')[0].reset();
         } else {
             modal.find('.modal-title').text('Task details');
             $('#deleteTask').show();
             $('#updateTask').show();
             $('#saveTask').hide();
             currentTaskId = triggerElement.attr("id");
+            var Tname = $(`#${currentTaskId} h4`).text();
+            var Tdesc = $(`#${currentTaskId} p`).text();
+
+            $('#InputTaskName').val(Tname)
+            $('#InputTaskDescription').val(Tdesc);
             //See if I can't pull name and desc from html via jquery. Instead of txt.
         }
     });
@@ -102,14 +108,14 @@
        // alert('Save... Id:'+currentTaskId);
         var Tname = $('#InputTaskName').val(); 
         var Tdesc = $('#InputTaskDescription').val();
-
+        
             if (!Tname || !Tdesc) {
                 alert('Name or Description empty');
             } else {
                  $('#myModal').modal('hide');
                  doStuff = {task:'save',id: currentTaskId, name: Tname, desc: Tdesc};
                  updateTaskList(doStuff); 
-                 $('#form')[0].reset();
+                 
             }           
     });
 
@@ -131,6 +137,7 @@
                 $('#myModal').modal('hide');
                 doStuff = {task:'update',id: currentTaskId, name: Tname, desc: Tdesc};
                 updateTaskList(doStuff);
+                $('#form')[0].reset();
             }
 
     })
